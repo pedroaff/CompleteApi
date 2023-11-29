@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: complete-api
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./docker-data:/var/lib/mysql
+    ports:
+      - 3309:3306
