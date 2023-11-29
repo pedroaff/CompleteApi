@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Pedro.Business.Models;
+﻿namespace Pedro.Business.Models;
 
 public class Fornecedor : Entity
 {
