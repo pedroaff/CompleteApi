@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pedro.App\Pedro.App.csproj" />
     <ProjectReference Include="..\Pedro.Business\Pedro.Business.csproj" />
   </ItemGroup>
 

@@ -19,4 +19,8 @@
     <Folder Include="docker-data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pedro.Data\Pedro.Data.csproj" />
+  </ItemGroup>
+
 </Project>
