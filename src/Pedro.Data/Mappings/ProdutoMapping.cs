@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Pedro.Business.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pedro.Business.Models;
 
 namespace Pedro.Data.Mappings;
 
@@ -12,8 +12,8 @@ public class ProdutoMapping : IEntityTypeConfiguration<Produto>
 
         builder.Property(p => p.Nome)
             .IsRequired()
-            .HasColumnType("varchar(100)");
-        
+            .HasColumnType("varchar(200)");
+
         builder.Property(p => p.Descricao)
             .IsRequired()
             .HasColumnType("varchar(1000)");

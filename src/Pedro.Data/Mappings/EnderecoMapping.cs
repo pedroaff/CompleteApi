@@ -1,44 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Pedro.Business.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pedro.Business.Models;
 
 namespace Pedro.Data.Mappings;
 
 public class EnderecoMapping : IEntityTypeConfiguration<Endereco>
 {
-
     public void Configure(EntityTypeBuilder<Endereco> builder)
     {
-        builder.HasKey(e => e.Id);
+        builder.HasKey(p => p.Id);
 
-        builder.Property(e => e.Logradouro)
+        builder.Property(c => c.Logradouro)
             .IsRequired()
             .HasColumnType("varchar(200)");
 
-        builder.Property(e => e.Numero)
+        builder.Property(c => c.Numero)
             .IsRequired()
-            .HasColumnType("varchar(14)");
+            .HasColumnType("varchar(50)");
 
-        builder.Property(e => e.Cep)
+        builder.Property(c => c.Cep)
             .IsRequired()
-            .HasColumnType("varchar(14)");
+            .HasColumnType("varchar(8)");
 
-        builder.Property(e => e.Complemento)
-           .IsRequired()
-           .HasColumnType("varchar(200)");
+        builder.Property(c => c.Complemento)
+            .HasColumnType("varchar(250)");
 
-        builder.Property(e => e.Bairro)
-          .IsRequired()
-          .HasColumnType("varchar(20)");
+        builder.Property(c => c.Bairro)
+            .IsRequired()
+            .HasColumnType("varchar(100)");
 
-        builder.Property(e => e.Cidade)
-          .IsRequired()
-          .HasColumnType("varchar(20)");
+        builder.Property(c => c.Cidade)
+            .IsRequired()
+            .HasColumnType("varchar(100)");
 
-        builder.Property(e => e.Estado)
-          .IsRequired()
-          .HasColumnType("varchar(20)");
+        builder.Property(c => c.Estado)
+            .IsRequired()
+            .HasColumnType("varchar(50)");
 
-        builder.ToTable("Endrecos");
+        builder.ToTable("Enderecos");
     }
 }

@@ -1,27 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Pedro.Business.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pedro.Business.Models;
 
 namespace Pedro.Data.Mappings;
 
 public class FornecedorMapping : IEntityTypeConfiguration<Fornecedor>
 {
-
     public void Configure(EntityTypeBuilder<Fornecedor> builder)
     {
-        builder.HasKey(f => f.Id);
+        builder.HasKey(p => p.Id);
 
-        builder.Property(f => f.Nome)
+        builder.Property(p => p.Nome)
             .IsRequired()
-            .HasColumnType("varchar(100)");
+            .HasColumnType("varchar(200)");
 
-        builder.Property(f => f.Documento)
+        builder.Property(p => p.Documento)
             .IsRequired()
             .HasColumnType("varchar(14)");
 
+        // 1 : 1 => Fornecedor : Endereco
         builder.HasOne(f => f.Endereco)
             .WithOne(e => e.Fornecedor);
 
+        // 1 : N => Fornecedor : Produtos
         builder.HasMany(f => f.Produtos)
             .WithOne(p => p.Fornecedor)
             .HasForeignKey(p => p.FornecedorId);
