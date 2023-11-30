@@ -82,12 +82,12 @@ public class FornecedoresController : MainController
         return Ok(fornecedor);
     }
 
-    public async Task<FornecedorDto> GetFornecedorProdutosEndereco(Guid id)
+    private async Task<FornecedorDto> GetFornecedorProdutosEndereco(Guid id)
     {
         return _mapper.Map<FornecedorDto>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
     }
 
-    public async Task<FornecedorDto> GetFornecedorEndedereco(Guid id)
+    private async Task<FornecedorDto> GetFornecedorEndedereco(Guid id)
     {
         return _mapper.Map<FornecedorDto>(await _fornecedorRepository.ObterFornecedorEndereco(id));
     }

@@ -22,8 +22,9 @@ public class FornecedorService : BaseService, IFornecedorService
 
     public async Task<bool> Adicionar(Fornecedor fornecedor)
     {
-        if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) 
-            || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return false;
+        if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return false;
+        
+        if (!ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return false;
 
         if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
         {
