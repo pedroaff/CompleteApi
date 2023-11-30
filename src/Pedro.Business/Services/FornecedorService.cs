@@ -56,12 +56,12 @@ public class FornecedorService : BaseService, IFornecedorService
         await _enderecoRepository.Atualizar(endereco);
     }
 
-    public async Task Remover(Guid id)
+    public async Task<bool> Remover(Guid id)
     {
         if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
         {
             Notificar("O fornecedor possui produtos cadastrados!");
-            return;
+            return false;
         }
 
         var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
@@ -72,6 +72,7 @@ public class FornecedorService : BaseService, IFornecedorService
         }
 
         await _fornecedorRepository.Remover(id);
+        return true;
     }
 
     public void Dispose()

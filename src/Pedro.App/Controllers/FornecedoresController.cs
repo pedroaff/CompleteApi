@@ -32,7 +32,7 @@ public class FornecedoresController : MainController
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<FornecedorDto>> GetById(Guid id)
     {
-        FornecedorDto? fornecedor = await GetFornecedorProductsAddress(id);
+        FornecedorDto? fornecedor = await GetFornecedorProdutosEndereco(id);
 
         if (fornecedor is null) return NotFound();
 
@@ -68,8 +68,27 @@ public class FornecedoresController : MainController
         return Ok(fornecedor);
     }
 
-    public async Task<FornecedorDto> GetFornecedorProductsAddress(Guid id)
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<FornecedorDto>> Remove(Guid id)
+    {
+        FornecedorDto fornecedor = await GetFornecedorEndedereco(id);
+
+        if (fornecedor is null) return NotFound();
+
+        bool result = await _fornecedorService.Remover(id);
+
+        if (!result) return BadRequest();
+
+        return Ok(fornecedor);
+    }
+
+    public async Task<FornecedorDto> GetFornecedorProdutosEndereco(Guid id)
     {
         return _mapper.Map<FornecedorDto>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
+    }
+
+    public async Task<FornecedorDto> GetFornecedorEndedereco(Guid id)
+    {
+        return _mapper.Map<FornecedorDto>(await _fornecedorRepository.ObterFornecedorEndereco(id));
     }
 }
