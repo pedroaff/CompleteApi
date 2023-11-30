@@ -14,12 +14,17 @@ public class FornecedoresController : MainController
     private readonly IFornecedorRepository _fornecedorRepository;
     private readonly IMapper _mapper;
     private readonly IFornecedorService _fornecedorService;
+    private readonly INotificador _notificador;
 
-    public FornecedoresController(IFornecedorRepository fornecedorRepository, IMapper mapper, IFornecedorService fornecedorService)
+    public FornecedoresController(IFornecedorRepository fornecedorRepository,
+                                  IMapper mapper,
+                                  IFornecedorService fornecedorService,
+                                  INotificador notificador) : base(notificador)
     {
         _fornecedorRepository = fornecedorRepository;
         _mapper = mapper;
         _fornecedorService = fornecedorService;
+        _notificador = notificador;
     }
 
     public async Task<IEnumerable<FornecedorDto>> GetAll()
@@ -42,13 +47,11 @@ public class FornecedoresController : MainController
     [HttpPost]
     public async Task<ActionResult<FornecedorDto>> Create(FornecedorDto fornecedorDto)
     {
-        if (!ModelState.IsValid) return BadRequest();
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        bool result = await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorDto));
+        await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorDto));
 
-        if (!result) return BadRequest();
-
-        return Ok();
+        return CustomResponse(fornecedorDto);
     }
 
     [HttpPut("{id:guid}")]
@@ -56,15 +59,11 @@ public class FornecedoresController : MainController
     {
         if (id != fornecedorDto.Id) return BadRequest();
 
-        if (!ModelState.IsValid) return BadRequest();
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        Fornecedor fornecedor = _mapper.Map<Fornecedor>(fornecedorDto);
+        await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorDto));
 
-        bool result = await _fornecedorService.Atualizar(fornecedor);
-
-        if (!result) return BadRequest();
-
-        return Ok(fornecedor);
+        return CustomResponse(fornecedorDto);
     }
 
     [HttpDelete("{id:guid}")]
