@@ -44,12 +44,11 @@ public class FornecedoresController : MainController
     {
         if (!ModelState.IsValid) return BadRequest();
 
-        Fornecedor fornecedor = _mapper.Map<Fornecedor>(fornecedorDto);
-        bool result = await _fornecedorService.Adicionar(fornecedor);
+        bool result = await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorDto));
 
         if (!result) return BadRequest();
 
-        return Ok(fornecedor);
+        return Ok();
     }
 
     [HttpPut("{id:guid}")]
