@@ -52,6 +52,22 @@ public class FornecedoresController : MainController
         return Ok(fornecedor);
     }
 
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<FornecedorDto>> Update(Guid id, FornecedorDto fornecedorDto)
+    {
+        if (id != fornecedorDto.Id) return BadRequest();
+
+        if (!ModelState.IsValid) return BadRequest();
+
+        Fornecedor fornecedor = _mapper.Map<Fornecedor>(fornecedorDto);
+
+        bool result = await _fornecedorService.Atualizar(fornecedor);
+
+        if (!result) return BadRequest();
+
+        return Ok(fornecedor);
+    }
+
     public async Task<FornecedorDto> GetFornecedorProductsAddress(Guid id)
     {
         return _mapper.Map<FornecedorDto>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
