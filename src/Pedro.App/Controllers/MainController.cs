@@ -21,7 +21,7 @@ public abstract class MainController : ControllerBase
     {
         if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
 
-        return CustomResponse(modelState);
+        return CustomResponse();
     }
 
     protected ActionResult CustomResponse(object? result = null)
