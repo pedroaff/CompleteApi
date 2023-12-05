@@ -70,7 +70,7 @@ public class ProdutosController : MainController
         await _produtoService.Adicionar(_mapper.Map<Produto>(produtoDto));
 
         return CustomResponse(produtoDto); 
-    }
+    } 
 
     private bool Upload(string arquivo, string imgNome)
     {
@@ -93,5 +93,39 @@ public class ProdutosController : MainController
         System.IO.File.WriteAllBytes(filePath, imageDataByteArray);
 
         return true;
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult> Update(Guid id, ProdutoDto produtoDto)
+    {
+        if (id != produtoDto.Id)
+        {
+            NotificarError("Os ids informados não são iguais");
+            return CustomResponse();
+        }
+
+        var produto = await ObterProduto(id);
+        produtoDto.Imagem = produto.Imagem;
+
+        if (produtoDto.Imagem != null)
+        {
+            var imagemNome = Guid.NewGuid() + "_" + produtoDto.Imagem;
+
+            if (!Upload(produtoDto.ImagemUpload, imagemNome))
+            {
+                return CustomResponse(ModelState);
+            }
+
+            produto.Imagem = imagemNome;
+        }
+
+        produto.Nome = produtoDto.Nome;
+        produto.Descricao = produtoDto.Descricao;
+        produto.Valor = produtoDto.Valor;
+        produto.Ativo = produtoDto.Ativo;
+
+        await _produtoService.Atualizar(_mapper.Map<Produto>(produto));
+
+        return CustomResponse(produtoDto);
     }
 }
