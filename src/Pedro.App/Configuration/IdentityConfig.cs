@@ -11,7 +11,6 @@ public static class IdentityConfig
     {
         services.AddDbContext<ApplicationDbContext>(opts => opts.UseMySql(connString, ServerVersion.AutoDetect(connString)));
 
-
         services.AddDefaultIdentity<IdentityUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
