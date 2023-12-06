@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pedro.App.DTO;
 using Pedro.Business.Intefaces;
@@ -95,6 +96,7 @@ public class ProdutosController : MainController
         return true;
     }
 
+    [Extensions.CustomAuthorize.ClaimsAuthorize("Fornecedor", "Atualizar")]
     [HttpPut("{id:guid}")]
     public async Task<ActionResult> Update(Guid id, ProdutoDto produtoDto)
     {

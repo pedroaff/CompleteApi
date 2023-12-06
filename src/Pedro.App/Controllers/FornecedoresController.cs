@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pedro.App.DTO;
 using Pedro.Business.Intefaces;
 using Pedro.Business.Models;
+using static Pedro.App.Extensions.CustomAuthorize;
 
 namespace Pedro.App.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class FornecedoresController : MainController
@@ -44,6 +47,7 @@ public class FornecedoresController : MainController
         return fornecedor;
     }
 
+    [ClaimsAuthorize("Fornecedor", "Criar")]
     [HttpPost]
     public async Task<ActionResult<FornecedorDto>> Create(FornecedorDto fornecedorDto)
     {
@@ -54,6 +58,7 @@ public class FornecedoresController : MainController
         return CustomResponse(fornecedorDto);
     }
 
+    [ClaimsAuthorize("Fornecedor", "Atualizar")]
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<FornecedorDto>> Update(Guid id, FornecedorDto fornecedorDto)
     {
