@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="docker-data\" />
-    <Folder Include="Extensions\" />
     <Folder Include="wwwroot\imagens\" />
   </ItemGroup>
 

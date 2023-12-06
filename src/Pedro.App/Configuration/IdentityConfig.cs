@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Pedro.App.Data;
+using Pedro.App.Extensions;
 using Pedro.Data.Context;
 
 namespace Pedro.App.Configuration;
@@ -14,6 +15,7 @@ public static class IdentityConfig
         services.AddDefaultIdentity<IdentityUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddErrorDescriber<IdentityPtBr>()
             .AddDefaultTokenProviders();
 
         return services;
